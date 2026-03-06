@@ -12,14 +12,15 @@ body{
 margin:0;
 overflow:hidden;
 }
-#fullscreenVideo{
+
+#videoPlayer{
 position:fixed;
 top:0;
 left:0;
 width:100vw;
 height:100vh;
-background:black;
 object-fit:contain;
+background:black;
 display:none;
 z-index:9999;
 }
@@ -28,46 +29,11 @@ z-index:9999;
 
 <body>
 
-<video id="fullscreenVideo" autoplay playsinline></video>
-
-<!-- SCENE 1 -->
-<a-scene mindar-image="imageTargetSrc: ./targets (1).mind; maxTrack:5;"
-embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
-<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-<a-entity mindar-image-target="targetIndex:0"></a-entity>
-</a-scene>
-
-<!-- SCENE 2 -->
-<a-scene mindar-image="imageTargetSrc: ./targets (2).mind; maxTrack:5;"
-embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
-<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-<a-entity mindar-image-target="targetIndex:0"></a-entity>
-</a-scene>
-
-<!-- SCENE 3 -->
-<a-scene mindar-image="imageTargetSrc: ./targets (3).mind; maxTrack:5;"
-embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
-<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-<a-entity mindar-image-target="targetIndex:0"></a-entity>
-</a-scene>
-
-<!-- SCENE 4 -->
-<a-scene mindar-image="imageTargetSrc: ./targets (4).mind; maxTrack:5;"
-embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
-<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-<a-entity mindar-image-target="targetIndex:0"></a-entity>
-</a-scene>
-
-<!-- SCENE 5 -->
-<a-scene mindar-image="imageTargetSrc: ./targets (5).mind; maxTrack:5;"
-embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
-<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
-<a-entity mindar-image-target="targetIndex:0"></a-entity>
-</a-scene>
+<video id="videoPlayer" autoplay playsinline></video>
 
 <script>
 
-const video=document.getElementById("fullscreenVideo")
+const video=document.getElementById("videoPlayer")
 
 function playVideo(name){
 video.src="./videos/"+name+".mp4"
@@ -81,14 +47,97 @@ video.currentTime=0
 video.style.display="none"
 }
 
-document.addEventListener("targetFound",()=>{
+</script>
+
+<!-- TARGET FILE 1 -->
+
+<a-scene mindar-image="imageTargetSrc: ./targets (1).mind; maxTrack:1;"
+embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
+
+<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+<a-entity mindar-image-target="targetIndex:0"
+event-set__enter="_event: targetFound; _target: #videoPlayer"
+></a-entity>
+
+</a-scene>
+
+<script>
+document.querySelectorAll("[mindar-image-target]")[0].addEventListener("targetFound",()=>{
 playVideo("001")
 })
+</script>
 
-document.addEventListener("targetLost",()=>{
-stopVideo()
+
+<!-- TARGET FILE 2 -->
+
+<a-scene mindar-image="imageTargetSrc: ./targets (2).mind; maxTrack:1;"
+embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
+
+<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+<a-entity mindar-image-target="targetIndex:0"></a-entity>
+
+</a-scene>
+
+<script>
+document.querySelectorAll("[mindar-image-target]")[1].addEventListener("targetFound",()=>{
+playVideo("002")
 })
+</script>
 
+
+<!-- TARGET FILE 3 -->
+
+<a-scene mindar-image="imageTargetSrc: ./targets (3).mind; maxTrack:1;"
+embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
+
+<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+<a-entity mindar-image-target="targetIndex:0"></a-entity>
+
+</a-scene>
+
+<script>
+document.querySelectorAll("[mindar-image-target]")[2].addEventListener("targetFound",()=>{
+playVideo("003")
+})
+</script>
+
+
+<!-- TARGET FILE 4 -->
+
+<a-scene mindar-image="imageTargetSrc: ./targets (4).mind; maxTrack:1;"
+embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
+
+<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+<a-entity mindar-image-target="targetIndex:0"></a-entity>
+
+</a-scene>
+
+<script>
+document.querySelectorAll("[mindar-image-target]")[3].addEventListener("targetFound",()=>{
+playVideo("004")
+})
+</script>
+
+
+<!-- TARGET FILE 5 -->
+
+<a-scene mindar-image="imageTargetSrc: ./targets (5).mind; maxTrack:1;"
+embedded vr-mode-ui="enabled:false" device-orientation-permission-ui="enabled:false">
+
+<a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+<a-entity mindar-image-target="targetIndex:0"></a-entity>
+
+</a-scene>
+
+<script>
+document.querySelectorAll("[mindar-image-target]")[4].addEventListener("targetFound",()=>{
+playVideo("005")
+})
 </script>
 
 </body>
