@@ -1,90 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AR Album - 30 Markers (001 Format)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gods AR</title>
 
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-    }
+<style>
+body{
+margin:0;
+overflow:hidden;
+}
 
-    #fullscreenVideo {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: contain;
-      background: black;
-      display: none;
-      z-index: 9999;
-    }
-  </style>
+#fullscreenVideo{
+position:fixed;
+top:0;
+left:0;
+width:100vw;
+height:100vh;
+object-fit:contain;
+background:black;
+display:none;
+z-index:9999;
+}
+</style>
 </head>
 
 <body>
 
-  <video 
-    id="fullscreenVideo" 
-    playsinline 
-    webkit-playsinline 
-    autoplay
-  ></video>
+<video 
+id="fullscreenVideo"
+playsinline
+webkit-playsinline
+autoplay
+></video>
 
-  <a-scene
-    mindar-image="imageTargetSrc: ./targets.mind; maxTrack: 1;"
-    color-space="sRGB"
-    renderer="colorManagement: true"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false"
-  >
+<a-scene
+mindar-image="imageTargetSrc: ./targets (1).mind; maxTrack: 1;"
+color-space="sRGB"
+renderer="colorManagement: true"
+vr-mode-ui="enabled: false"
+device-orientation-permission-ui="enabled: false"
+>
 
-    <a-assets></a-assets>
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+<a-assets></a-assets>
 
-  </a-scene>
+<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <script>
-    const fullscreenVideo = document.getElementById("fullscreenVideo");
-    const scene = document.querySelector("a-scene");
+</a-scene>
 
-    const MAX_TARGETS = 30; // 30 markers
+<script>
 
-    function formatNumber(num) {
-      return String(num).padStart(3, '0'); // 001 format
-    }
+const fullscreenVideo = document.getElementById("fullscreenVideo");
+const scene = document.querySelector("a-scene");
 
-    function playVideo(index) {
-      const videoName = formatNumber(index + 1); // 1→001
-      fullscreenVideo.src = `./videos/${videoName}.mp4`;
-      fullscreenVideo.style.display = "block";
-      fullscreenVideo.play().catch(() => {});
-    }
+const MAX_TARGETS = 2;
 
-    function stopVideo() {
-      fullscreenVideo.pause();
-      fullscreenVideo.currentTime = 0;
-      fullscreenVideo.style.display = "none";
-    }
+function formatNumber(num){
+return String(num).padStart(3,'0');
+}
 
-    for (let i = 0; i < MAX_TARGETS; i++) {
-      const entity = document.createElement("a-entity");
-      entity.setAttribute("mindar-image-target", `targetIndex: ${i}`);
+function playVideo(index){
+const videoName = formatNumber(index + 1);
+fullscreenVideo.src = `./videos/${videoName}.mp4`;
+fullscreenVideo.style.display="block";
+fullscreenVideo.play().catch(()=>{});
+}
 
-      entity.addEventListener("targetFound", () => {
-        playVideo(i);
-      });
+function stopVideo(){
+fullscreenVideo.pause();
+fullscreenVideo.currentTime=0;
+fullscreenVideo.style.display="none";
+}
 
-      entity.addEventListener("targetLost", stopVideo);
+for(let i=0;i<MAX_TARGETS;i++){
 
-      scene.appendChild(entity);
-    }
-  </script>
+const entity=document.createElement("a-entity");
+
+entity.setAttribute("mindar-image-target",`targetIndex: ${i}`);
+
+entity.addEventListener("targetFound",()=>{
+playVideo(i);
+});
+
+entity.addEventListener("targetLost",()=>{
+stopVideo();
+});
+
+scene.appendChild(entity);
+
+}
+
+</script>
 
 </body>
 </html>
